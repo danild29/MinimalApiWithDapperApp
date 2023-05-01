@@ -1,5 +1,9 @@
 ﻿
 
+using System;
+using System.Data.SqlClient;
+using System.Xml.Linq;
+
 namespace MinimalApiWithDapper;
 public static class Api
 {
@@ -11,6 +15,44 @@ public static class Api
         app.MapPost("/Users", InsertUser);
         app.MapPut("/Users", UpdateUser);
         app.MapDelete("/Users", DeleteUser);
+        app.MapGet("/UsersByName/{name}", GetUserByName);
+    }
+
+
+
+    private static async Task<IResult> GetUserByName(string name)
+    {
+        try
+        {
+            UserModel user = new();
+
+
+            string con = "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = MinimalApiUserDB; Integrated Security = True; Connect Timeout = 30; Encrypt = False; TrustServerCertificate = False; ApplicationIntent = ReadWrite; MultiSubnetFailover = False";
+            
+            using (SqlConnection myConnection = new SqlConnection(con))
+            {
+                string oString = "Select * from dbo.[User] where FirstName=@FirstName";
+                SqlCommand oCmd = new SqlCommand(oString, myConnection);
+                oCmd.Parameters.AddWithValue("@FirstName", name);
+                myConnection.Open();
+                using (SqlDataReader oReader = oCmd.ExecuteReader())
+                {
+                    while (oReader.Read())
+                    {
+                        user.FirstName = oReader["FirstName"].ToString();
+                        user.LastName = oReader["LastName"].ToString();
+                        user.Id = (int)oReader["Id"];
+                    }
+                    myConnection.Close();
+                }
+            }
+
+            return Results.Ok(user);
+        }
+        catch (Exception ex)
+        {
+            return Results.Problem(ex.Message);
+        }
     }
 
     private static async Task<IResult> GetUsers(IUserData data)

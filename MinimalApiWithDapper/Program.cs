@@ -9,6 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ISqlDataAccess, SqlDataAccess>();
 builder.Services.AddSingleton<IUserData, UserData>();
+builder.Services.AddSingleton<IPairData, PairData>();
+builder.Services.AddSingleton<IQuestionData, QuestionData>();
 
 var app = builder.Build();
 
@@ -22,7 +24,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.ConfigureApi();
-
+app.ConfigurePairApi();
+app.ConfigureQuestionApi();
 
 
 app.Run();

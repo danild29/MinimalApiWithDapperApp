@@ -59,6 +59,7 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
     <Folder Include="dbo\StoredProcedures" />
+    <Folder Include="dbo\StoredProcedures\spQuestion" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\User.sql" />
@@ -67,6 +68,17 @@
     <Build Include="dbo\StoredProcedures\spUser_Delete.sql" />
     <Build Include="dbo\StoredProcedures\spUser_Insert.sql" />
     <Build Include="dbo\StoredProcedures\spUser_Update.sql" />
+    <Build Include="dbo\Tables\Pair.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_GetAll.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_Get.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_Delete.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_Update.sql" />
+    <Build Include="dbo\StoredProcedures\spPair_GetAnotherIdById.sql" />
+    <Build Include="dbo\Tables\Question.sql" />
+    <Build Include="dbo\StoredProcedures\spQuestion\spQuestion_Get.sql" />
+    <Build Include="dbo\StoredProcedures\spQuestion\spQuestion_Insert.sql" />
+    <Build Include="dbo\StoredProcedures\spQuestion\spQuestion_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.sql" />

@@ -14,8 +14,7 @@ public class SqlDataAccess : ISqlDataAccess
         _config = configuration;
     }
 
-    public async Task<IEnumerable<T>> LoadData<T, U>(string storedProcedure,
-                                                     U parametrs, string connectionId = "Default")
+    public async Task<IEnumerable<T>> LoadData<T, U>(string storedProcedure, U parametrs, string connectionId = "Default")
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionId));
 
@@ -23,8 +22,7 @@ public class SqlDataAccess : ISqlDataAccess
     }
 
 
-    public async Task SaveData<T>(string storedProcedure,
-                                  T parametrs, string connectionId = "Default")
+    public async Task SaveData<T>(string storedProcedure, T parametrs, string connectionId = "Default")
     {
         using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionId));
 
