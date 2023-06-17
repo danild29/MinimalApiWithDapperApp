@@ -1,7 +1,12 @@
 ﻿
 
+using FluentValidation.Results;
+using MinimalApiWithDapper.Validators;
 using System;
+using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Data.SqlClient;
+using System.Security.Cryptography.Xml;
 using System.Xml.Linq;
 
 namespace MinimalApiWithDapper;
@@ -19,7 +24,9 @@ public static class Api
     }
 
 
+    public static string logFile = "LogsInfo/loginfo.txt";
 
+    
     private static async Task<IResult> GetUserByName(string name)
     {
         try
@@ -82,10 +89,39 @@ public static class Api
         }
     }
 
+
+
+    private static string WriteToLog(ValidationResult res)
+    {
+        List<string> errors = new();
+        foreach (ValidationFailure er in res.Errors)
+        {
+            errors.Add(er.ErrorMessage);
+
+        }
+
+        List<string> file = File.ReadAllLines(logFile).ToList();
+        file.Add(DateTime.Now + "\n");
+        file.AddRange(errors);
+        file.Add(new string('-', 20) + "\n");
+        File.WriteAllLines(logFile, file);
+
+        return String.Join(';', errors);
+    }
+
     private static async Task<IResult> InsertUser(UserModel user, IUserData data)
     {
         try
         {
+            var validator = new UserValidator();
+            var result = validator.Validate(user);
+
+            if(result.IsValid == false)
+            {
+                return Results.Problem(WriteToLog(result));
+            }
+
+
             await data.InsertUser(user);
             return Results.Ok();
         }

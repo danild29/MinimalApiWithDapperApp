@@ -14,12 +14,19 @@ builder.Services.AddSingleton<IQuestionData, QuestionData>();
 
 var app = builder.Build();
 
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
+File.WriteAllText(Api.logFile, "");
+
+
 
 app.UseHttpsRedirection();
 

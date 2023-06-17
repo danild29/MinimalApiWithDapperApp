@@ -8,9 +8,7 @@ public class UserModel
 {
     [Key]
     public int Id { get; set; }
-    [MinLength(1)]
-    public string FirstName { get; set; }
-    [MinLength(1)]
-    public string LastName { get; set; }
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
 }
 
