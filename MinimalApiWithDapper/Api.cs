@@ -106,6 +106,8 @@ public static class Api
         file.Add(new string('-', 20) + "\n");
         File.WriteAllLines(logFile, file);
 
+
+        var sg  = new string('1', 10);
         return String.Join(';', errors);
     }
 
